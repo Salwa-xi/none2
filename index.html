@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>none  </title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #rectangle {
+            text-emphasis: امسكني ;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 30px;
+            background-color: rgb(138, 138, 231);
+        }
+
+        #pointsDisplay {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="rectangle"></div>
+    <span id="pointsDisplay">النقاط: 0</span>
+
+    <script>
+        const rectangle = document.getElementById('rectangle');
+        const speed = 5; 
+        const distance = 200;
+        let points = 0;
+
+        rectangle.addEventListener('mousemove', (event) => {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            const rectangleX = rectangle.offsetLeft;
+            const rectangleY = rectangle.offsetTop;
+
+            const deltaX = mouseX - rectangleX;
+            const deltaY = mouseY - rectangleY;
+
+            const newX = rectangleX - (deltaX * speed);
+            const newY = rectangleY - (deltaY * speed);
+
+            rectangle.style.left = `${newX}px`;
+            rectangle.style.top = `${newY}px`;
+
+            // Check if rectangle is caught
+            if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
+                points++; // Increase points when rectangle is caught
+                document.getElementById('pointsDisplay').innerText = `النقاط: ${points}`;
+                if (points === 5) {
+                    alert("فزت خلاص يلا على كتابك!"); // Declare victory when points reach 5
+                    points = 0; // Reset points after winning
+                    document.getElementById('pointsDisplay').innerText = `النقاط: ${points}`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
